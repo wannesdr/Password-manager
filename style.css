@@ -1,16 +1,17 @@
+/* ===== Portal Game Inspired UI Theme ===== */
+
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto+Mono:wght@400;500&display=swap');
 
 :root {
-  --bg: #0a0a0d;
-  --panel-bg: #14161b;
-  --panel-border: #1f2228;
-  --text: #e5e9f0;
-  --text-dim: #8b97a5;
-  --accent: #00b3ff;       /* Aperture cyan */
-  --accent-glow: #48cfff;
-  --warning: #ff9f1c;      /* Portal orange */
-  --success: #00ffa3;      /* green highlight */
-  --danger: #ff4d4d;
+  --bg: #f2f2f2;            /* Light panel background */
+  --panel-bg: #ffffff;       /* White panels */
+  --panel-border: #d0d0d0;   /* Light grey borders */
+  --text: #111111;           /* Dark text */
+  --text-dim: #555555;       /* Secondary text */
+  --accent-blue: #009cff;    /* Portal blue */
+  --accent-orange: #ff6600;  /* Portal orange */
+  --success: #00cc66;
+  --danger: #ff4444;
   --radius: 10px;
   --transition: 0.25s ease;
   --font-main: 'Roboto Mono', monospace;
@@ -23,23 +24,21 @@
 
 body {
   font-family: var(--font-main);
-  background: radial-gradient(circle at center, #0e1014 0%, #08090b 100%);
+  background: var(--bg);
   color: var(--text);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
   min-height: 100vh;
   margin: 0;
   padding: 50px 20px;
-  overflow-x: hidden;
 }
 
 h1 {
   font-family: var(--font-title);
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: var(--accent);
+  color: var(--accent-blue);
   margin-bottom: 30px;
   font-size: 1.8rem;
   text-align: center;
@@ -51,15 +50,9 @@ h1::after {
   display: block;
   height: 3px;
   width: 80px;
-  background: linear-gradient(90deg, var(--accent), var(--warning));
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-orange));
   margin: 8px auto 0;
   border-radius: 2px;
-  animation: slideGlow 3s infinite alternate ease-in-out;
-}
-
-@keyframes slideGlow {
-  from { filter: drop-shadow(0 0 6px var(--accent)); }
-  to { filter: drop-shadow(0 0 12px var(--warning)); }
 }
 
 .container {
@@ -69,28 +62,13 @@ h1::after {
   width: 100%;
   max-width: 520px;
   border: 1px solid var(--panel-border);
-  box-shadow: 0 0 25px rgba(0, 179, 255, 0.15);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   animation: fadeIn 0.6s ease;
-  position: relative;
 }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-.container::before {
-  content: "APERTURE SYSTEMS INTERFACE";
-  position: absolute;
-  top: -16px;
-  left: 15px;
-  font-size: 0.65rem;
-  letter-spacing: 1px;
-  color: var(--accent-glow);
-  background: var(--bg);
-  padding: 2px 6px;
-  border-radius: 4px;
-  text-shadow: 0 0 4px var(--accent-glow);
 }
 
 label {
@@ -109,7 +87,7 @@ input, textarea {
   margin-top: 6px;
   border: 1px solid var(--panel-border);
   border-radius: 6px;
-  background: #0f1014;
+  background: #fefefe;
   color: var(--text);
   font-size: 0.95rem;
   transition: border-color var(--transition), box-shadow var(--transition);
@@ -117,20 +95,20 @@ input, textarea {
 
 input:focus, textarea:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 6px var(--accent);
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 6px var(--accent-blue);
 }
 
 button {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
-  border: 2px solid var(--accent);
+  border: 2px solid var(--accent-blue);
   border-radius: 6px;
   font-size: 0.95rem;
   font-weight: 600;
   background: transparent;
-  color: var(--accent);
+  color: var(--accent-blue);
   text-transform: uppercase;
   cursor: pointer;
   letter-spacing: 1px;
@@ -139,19 +117,19 @@ button {
 }
 
 button:hover {
-  background: var(--accent);
-  color: #0b0c0f;
+  background: var(--accent-blue);
+  color: #ffffff;
   transform: translateY(-1px);
 }
 
 .generate-btn {
-  border-color: var(--warning);
-  color: var(--warning);
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
 }
 
 .generate-btn:hover {
-  background: var(--warning);
-  color: #0b0c0f;
+  background: var(--accent-orange);
+  color: #ffffff;
 }
 
 .delete-btn {
@@ -165,22 +143,22 @@ button:hover {
 
 .delete-btn:hover {
   background: var(--danger);
-  color: #0b0c0f;
+  color: #ffffff;
 }
 
 .divider {
   margin: 25px 0;
   border: none;
   height: 1px;
-  background: linear-gradient(90deg, var(--accent), transparent);
+  background: linear-gradient(90deg, var(--accent-blue), transparent);
 }
 
 .vault-entry {
-  background: #0d0e12;
+  background: #f8f8f8;
   padding: 12px 15px;
   border-radius: 6px;
   margin-top: 10px;
-  border: 1px solid #1e1f25;
+  border: 1px solid #d0d0d0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -188,12 +166,12 @@ button:hover {
 }
 
 .vault-entry:hover {
-  background: #15161d;
+  background: #f0f0f0;
   transform: translateY(-1px);
 }
 
 .vault-entry strong {
-  color: var(--accent);
+  color: var(--accent-blue);
   font-family: var(--font-title);
   letter-spacing: 1px;
 }
@@ -209,24 +187,23 @@ button:active {
   transform: translateY(0);
 }
 
-/* Glow animation for interactive elements */
 button:hover, input:focus {
-  box-shadow: 0 0 10px var(--accent-glow);
+  box-shadow: 0 0 6px var(--accent-blue);
 }
 
 ::selection {
-  background: var(--accent);
-  color: #0b0c0f;
+  background: var(--accent-blue);
+  color: #ffffff;
 }
 
-/* Scrollbar */
+/* Scrollbar for light theme */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--accent);
+  background: var(--accent-blue);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #111;
+  background: #e5e5e5;
 }
