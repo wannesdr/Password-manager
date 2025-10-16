@@ -1,211 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Custom Encrypted Password Vault</title>
-  <style>
-    body {
-      font-family: "Inter", sans-serif;
-      background: #0d1117;
-      color: #e6edf3;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      padding: 30px;
-    }
-
-    h1 {
-      margin-bottom: 20px;
-      color: #58a6ff;
-    }
-
-    .container {
-      background: #161b22;
-      padding: 20px;
-      border-radius: 10px;
-      width: 100%;
-      max-width: 500px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    }
-
-    input, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-    }
-
-    input, textarea {
-      background: #0d1117;
-      color: #e6edf3;
-    }
-
-    button {
-      background: #238636;
-      color: white;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: 0.2s;
-    }
-
-    button:hover {
-      background: #2ea043;
-    }
-
-    .vault-entry {
-      background: #0d1117;
-      padding: 10px;
-      border-radius: 6px;
-      margin-top: 10px;
-    }
-
-    .vault-entry strong {
-      color: #58a6ff;
-    }
-
-    .generate-btn {
-      background: #8957e5;
-    }
-
-    .generate-btn:hover {
-      background: #986fee;
-    }
-
-    .delete-btn {
-      background: #da3633;
-    }
-
-    .delete-btn:hover {
-      background: #f85149;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aperture Password Vault | Custom Encryption</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="aperture-logo.png" type="image/png" />
 </head>
 <body>
-  <h1>🔐 Custom Password Vault</h1>
-  <div class="container">
-    <label>Encryption Key:</label>
-    <input type="text" id="key" placeholder="Enter your secret key">
+  <header>
+    <div class="logo-space" style="text-align:center; margin-bottom:20px;">
+      <!-- Optional Aperture logo image -->
+      <img src="aperture-logo.png" alt="Aperture Laboratories" style="max-width:100px; opacity:0.9;" />
+    </div>
+    <h1>APERTURE PASSWORD VAULT</h1>
+  </header>
 
-    <hr style="margin:15px 0; border:1px solid #21262d;">
+  <main>
+    <div class="container">
+      <label for="key">Encryption Key</label>
+      <input type="text" id="key" placeholder="Enter your Aperture access key" />
 
-    <label>Account Name:</label>
-    <input type="text" id="account" placeholder="e.g., Gmail">
+      <hr class="divider">
 
-    <label>Password:</label>
-    <input type="text" id="password" placeholder="Enter or generate password">
+      <label for="account">Account Name</label>
+      <input type="text" id="account" placeholder="e.g., ApertureMail" />
 
-    <button class="generate-btn" onclick="generatePassword()">Generate Random Password</button>
-    <button onclick="savePassword()">Save Password</button>
-    <hr style="margin:15px 0; border:1px solid #21262d;">
-    <button onclick="loadVault()">Load Vault</button>
+      <label for="password">Password</label>
+      <input type="text" id="password" placeholder="Enter or generate password" />
 
-    <div id="vault"></div>
-  </div>
+      <button class="generate-btn" onclick="generatePassword()">Generate Random Password</button>
+      <button onclick="savePassword()">Store Encrypted Password</button>
 
-  <script>
-    // Alphabet: a-z + U+3164
-    const alphabet = [...'abcdefghijklmnopqrstuvwxyz', '\u3164'];
-    const size = alphabet.length;
+      <hr class="divider">
 
-    function charToNum(c) {
-      return alphabet.indexOf(c) + 1;
-    }
+      <button onclick="loadVault()">Access Vault</button>
 
-    function numToChar(n) {
-      return alphabet[n - 1];
-    }
+      <div id="vault" class="vault-list"></div>
+    </div>
+  </main>
 
-    function textToNumbers(text) {
-      return [...text].map(c => charToNum(c)).filter(n => n > 0);
-    }
+  <footer style="text-align:center; margin-top:40px; color:#555; font-size:0.8rem;">
+    <p>©  Aperture Laboratories | Security Division | Experimental Encryption Suite</p>
+  </footer>
 
-    function numbersToText(nums) {
-      return nums.map(n => numToChar(n)).join('');
-    }
-
-    function encrypt(message, key) {
-      const msgNums = textToNumbers(message);
-      const keyNums = textToNumbers(key);
-      return numbersToText(msgNums.map((m, i) => {
-        const k = keyNums[i % keyNums.length];
-        return ((m + k - 1) % size) + 1;
-      }));
-    }
-
-    function decrypt(cipher, key) {
-      const cNums = textToNumbers(cipher);
-      const kNums = textToNumbers(key);
-      return numbersToText(cNums.map((c, i) => {
-        const k = kNums[i % kNums.length];
-        return ((c - k - 1 + size) % size) + 1;
-      }));
-    }
-
-    function generatePassword() {
-      const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
-      let pass = '';
-      for (let i = 0; i < 12; i++) {
-        pass += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      document.getElementById('password').value = pass;
-    }
-
-    function savePassword() {
-      const key = document.getElementById('key').value;
-      const account = document.getElementById('account').value.toLowerCase();
-      const password = document.getElementById('password').value.toLowerCase();
-
-      if (!key || !account || !password) {
-        alert('Please fill in all fields!');
-        return;
-      }
-
-      const encrypted = encrypt(password, key);
-      const vault = JSON.parse(localStorage.getItem('vault') || '{}');
-      vault[account] = encrypted;
-      localStorage.setItem('vault', JSON.stringify(vault));
-
-      alert('✅ Password saved securely!');
-      document.getElementById('account').value = '';
-      document.getElementById('password').value = '';
-    }
-
-    function loadVault() {
-      const key = document.getElementById('key').value;
-      const vaultDiv = document.getElementById('vault');
-      vaultDiv.innerHTML = '';
-
-      if (!key) {
-        alert('Enter your key to decrypt!');
-        return;
-      }
-
-      const vault = JSON.parse(localStorage.getItem('vault') || '{}');
-      Object.keys(vault).forEach(acc => {
-        let decrypted;
-        try {
-          decrypted = decrypt(vault[acc], key);
-        } catch (e) {
-          decrypted = '(invalid key)';
-        }
-        const div = document.createElement('div');
-        div.className = 'vault-entry';
-        div.innerHTML = `<strong>${acc}</strong>: ${decrypted}
-          <button class="delete-btn" onclick="deleteEntry('${acc}')">Delete</button>`;
-        vaultDiv.appendChild(div);
-      });
-    }
-
-    function deleteEntry(account) {
-      const vault = JSON.parse(localStorage.getItem('vault') || '{}');
-      delete vault[account];
-      localStorage.setItem('vault', JSON.stringify(vault));
-      loadVault();
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
