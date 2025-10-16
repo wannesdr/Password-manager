@@ -1,6 +1,6 @@
 body {
   font-family: "Lucida Console", "Courier New", monospace;
-  background: #0d1117;
+  background: #211D30;
   color: #e6edf3;
   display: flex;
   flex-direction: column;
@@ -16,7 +16,7 @@ h1 {
 }
 
 .container {
-  background: #161b22;
+  background: #211D30;
   padding: 20px;
   border-radius: 10px;
   width: 100%;
@@ -34,12 +34,12 @@ input, textarea, button {
 }
 
 input, textarea {
-  background: #0d1117;
+  background: #30211D;
   color: #e6edf3;
 }
 
 button {
-  background: #238636;
+  background: #887CB1;
   color: white;
   cursor: pointer;
   margin-top: 10px;
@@ -47,26 +47,26 @@ button {
 }
 
 button:hover {
-  background: #2ea043;
-}
+  background: #D6D2E4;
+
 
 .vault-entry {
-  background: #0d1117;
+  background: #887CB1;
   padding: 10px;
   border-radius: 6px;
   margin-top: 10px;
 }
 
 .vault-entry strong {
-  color: #58a6ff;
+  color: #D6D2E4;
 }
 
 .generate-btn {
-  background: #8957e5;
+  background: ##887CB1;
 }
 
 .generate-btn:hover {
-  background: #986fee;
+  background: #D6D2E4;
 }
 
 .delete-btn {
@@ -74,10 +74,10 @@ button:hover {
 }
 
 .delete-btn:hover {
-  background: #f85149;
+  background: #D6D2E4;
 }
 
 .divider {
   margin: 15px 0;
-  border: 1px solid #21262d;
+  border: 1px solid #0B0A10;
 }
