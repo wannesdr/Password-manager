@@ -1,83 +1,45 @@
+/* ===== Modern Dark UI for Custom Password Vault ===== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+:root {
+  --bg: #0f0f14;
+  --card-bg: #1a1b22;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --text: #e2e8f0;
+  --text-dim: #94a3b8;
+  --success: #10b981;
+  --success-hover: #059669;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --purple: #8b5cf6;
+  --purple-hover: #7c3aed;
+  --radius: 10px;
+  --transition: 0.25s ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: "Lucida Console", "Courier New", monospace;
-  background: #211D30;
-  color: #e6edf3;
+  font-family: "Inter", sans-serif;
+  background: radial-gradient(circle at top, #11121a 0%, #0a0a0e 100%);
+  color: var(--text);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
   min-height: 100vh;
-  padding: 30px;
+  margin: 0;
+  padding: 40px 20px;
 }
 
 h1 {
-  margin-bottom: 20px;
-  color: #58a6ff;
-}
-
-.container {
-  background: #211D30;
-  padding: 20px;
-  border-radius: 10px;
-  width: 100%;
-  max-width: 500px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-}
-
-input, textarea, button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-}
-
-input, textarea {
-  background: #30211D;
-  color: #e6edf3;
-}
-
-button {
-  background: #887CB1;
-  color: white;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: 0.2s;
-}
-
-button:hover {
-  background: #D6D2E4;
-
-
-.vault-entry {
-  background: #887CB1;
-  padding: 10px;
-  border-radius: 6px;
-  margin-top: 10px;
-}
-
-.vault-entry strong {
-  color: #D6D2E4;
-}
-
-.generate-btn {
-  background: ##887CB1;
-}
-
-.generate-btn:hover {
-  background: #D6D2E4;
-}
-
-.delete-btn {
-  background: #da3633;
-}
-
-.delete-btn:hover {
-  background: #D6D2E4;
-}
-
-.divider {
-  margin: 15px 0;
-  border: 1px solid #0B0A10;
-}
+  margin-bottom: 25px;
+  color: var(--accent);
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing:
