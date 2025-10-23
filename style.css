@@ -1,16 +1,16 @@
-/* ===== Clean Light Mode Theme ===== */
+/* ===== Neutral Light Mode Theme ===== */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Mono:wght@400;500&display=swap');
 
 :root {
-  --bg: #777C6D;
-  --panel-bg: #777C6D;
-  --panel-border: #B7B89F;
-  --text: #1a1a1a;
-  --text-muted: #555555;
-  --accent: #0078d7;     /* calm blue accent */
-  --accent-alt: #ff7a00; /* secondary orange accent */
-  --danger: #d94c4c;
+  --bg: #EEEEEE;
+  --panel-bg: #FFFFFF;
+  --panel-border: #CBCBCB;
+  --text: #333333;
+  --text-muted: #777C6D;
+  --accent: #777C6D;       /* main accent (dark olive gray) */
+  --accent-alt: #B7B89F;   /* secondary accent (soft green) */
+  --danger: #c86161;
   --radius: 8px;
   --transition: 0.2s ease;
   --font-main: 'Inter', sans-serif;
@@ -49,146 +49,4 @@ header img {
 h1 {
   font-weight: 700;
   font-size: 1.8rem;
-  letter-spacing: 0.5px;
-  margin: 0;
-  color: var(--accent);
-}
-
-/* === Main Container === */
-.container {
-  background: var(--panel-bg);
-  padding: 25px 30px;
-  border-radius: var(--radius);
-  width: 100%;
-  max-width: 520px;
-  border: 1px solid var(--panel-border);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-}
-
-/* === Form Elements === */
-label {
-  display: block;
-  margin-top: 15px;
-  font-weight: 500;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 0.5px;
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 6px;
-  border: 1px solid var(--panel-border);
-  border-radius: 6px;
-  background: #777C6D;
-  color: var(--text);
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  transition: border-color var(--transition);
-}
-
-input:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-
-/* === Buttons === */
-button {
-  width: 100%;
-  padding: 10px 0;
-  margin-top: 10px;
-  border-radius: 6px;
-  border: 1px solid var(--accent);
-  background: #777C6D;
-  color: var(--accent);
-  font-weight: 600;
-  cursor: pointer;
-  text-transform: uppercase;
-  transition: background var(--transition), color var(--transition);
-}
-
-button:hover {
-  background: var(--accent);
-  color: #777C6D;
-}
-
-.generate-btn {
-  border-color: var(--accent-alt);
-  color: var(--accent-alt);
-}
-
-.generate-btn:hover {
-  background: var(--accent-alt);
-  color: #777C6D;
-}
-
-.delete-btn {
-  background: transparent;
-  border: 1px solid var(--danger);
-  color: var(--danger);
-  font-size: 0.8rem;
-  padding: 6px 12px;
-  width: auto;
-  margin-left: 10px;
-}
-
-.delete-btn:hover {
-  background: var(--danger);
-  color: #777C6D;
-}
-
-/* === Dividers === */
-.divider {
-  margin: 25px 0;
-  border: none;
-  height: 1px;
-  background: #e4e4e4;
-}
-
-/* === Vault Entries === */
-.vault-entry {
-  background: #fdfdfd;
-  padding: 10px 15px;
-  border-radius: 6px;
-  margin-top: 10px;
-  border: 1px solid #e1e1e1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.vault-entry strong {
-  color: var(--accent);
-}
-
-.vault-entry span {
-  flex-grow: 1;
-  margin-left: 10px;
-  font-family: var(--font-mono);
-  word-break: break-all;
-}
-
-/* === Footer === */
-footer {
-  text-align: center;
-  margin-top: 40px;
-  color: var(--text-muted);
-  font-size: 0.8rem;
-}
-
-/* === Scrollbar === */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-thumb {
-  background: #cccccc;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #aaaaaa;
-}
-::-webkit-scrollbar-track {
-  background: #f0f0f0;
-}
+  lette
