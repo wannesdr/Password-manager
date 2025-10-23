@@ -3,40 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aperture Password Vault | Custom Encryption</title>
+  <title>Password Vault</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="aperture-logo.png" type="image/png" />
 </head>
 <body>
-<header style="width:100%; text-align:center; margin-bottom:25px; position:relative;">
-  <h1>APERTURE PASSWORD VAULT</h1>
-</header>
+  <header>
+    <!-- Optional logo or banner -->
+    <img src="logo.png" alt="Site Logo" style="max-width:200px; height:auto; opacity:0.9;">
+    <h1>Password Vault</h1>
+  </header>
+
   <main>
     <div class="container">
       <label for="key">Encryption Key</label>
-      <input type="text" id="key" placeholder="Enter your Aperture access key" />
+      <input type="text" id="key" placeholder="Enter your encryption key" />
 
       <hr class="divider">
 
       <label for="account">Account Name</label>
-      <input type="text" id="account" placeholder="e.g., ApertureMail" />
+      <input type="text" id="account" placeholder="e.g., Email, Banking, etc." />
 
       <label for="password">Password</label>
       <input type="text" id="password" placeholder="Enter or generate password" />
 
-      <button class="generate-btn" onclick="generatePassword()">Generate Random Password</button>
-      <button onclick="savePassword()">Store Encrypted Password</button>
+      <button class="generate-btn" onclick="generatePassword()">Generate Password</button>
+      <button onclick="savePassword()">Save Password</button>
 
       <hr class="divider">
 
-      <button onclick="loadVault()">Access Vault</button>
+      <button onclick="loadVault()">View Vault</button>
 
       <div id="vault" class="vault-list"></div>
     </div>
   </main>
 
-  <footer style="text-align:center; margin-top:40px; color:#555; font-size:0.8rem;">
-    <p>©  Aperture Laboratories | Security Division | Experimental Encryption Suite</p>
+  <footer>
+    <p>© 2025 Password Vault — Secure, Simple, Local</p>
   </footer>
 
   <script src="script.js"></script>
