@@ -2,15 +2,19 @@
 let vault = []; // array of { account, passwordEncrypted }
 
 // === Custom Encryption Mapping ===
+// Lowercase a-z, Uppercase A-Z, numbers 0-9, plus Unicode character \u3164
 const chars = [
   'a','b','c','d','e','f','g','h','i','j','k','l','m',
   'n','o','p','q','r','s','t','u','v','w','x','y','z',
-  '\u3164' // Unicode character after 'abc'
+  'A','B','C','D','E','F','G','H','I','J','K','L','M',
+  'N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+  '0','1','2','3','4','5','6','7','8','9',
+  '\u3164'
 ];
 
 function textToNumbers(text) {
   return text.split('').map(c => {
-    const idx = chars.indexOf(c.toLowerCase());
+    const idx = chars.indexOf(c);
     return idx >= 0 ? idx + 1 : c.charCodeAt(0); // fallback: char code
   });
 }
