@@ -1,101 +1,112 @@
-// --- Custom Encryption Algorithm ---
-// Alphabet: a-z + U+3164
-const alphabet = [...'abcdefghijklmnopqrstuvwxyz', '\u3164'];
-const size = alphabet.length;
+// === Vault Storage ===
+let vault = []; // array of { account, passwordEncrypted }
 
-function charToNum(c) {
-  return alphabet.indexOf(c) + 1;
-}
-
-function numToChar(n) {
-  return alphabet[n - 1];
-}
+// === Custom Encryption Mapping ===
+const chars = [
+  'a','b','c','d','e','f','g','h','i','j','k','l','m',
+  'n','o','p','q','r','s','t','u','v','w','x','y','z',
+  '\u3164' // Unicode character after 'abc'
+];
 
 function textToNumbers(text) {
-  return [...text].map(c => charToNum(c)).filter(n => n > 0);
+  return text.split('').map(c => {
+    const idx = chars.indexOf(c.toLowerCase());
+    return idx >= 0 ? idx + 1 : c.charCodeAt(0); // fallback: char code
+  });
 }
 
 function numbersToText(nums) {
-  return nums.map(n => numToChar(n)).join('');
+  return nums.map(n => {
+    if (n >= 1 && n <= chars.length) return chars[n-1];
+    return String.fromCharCode(n);
+  }).join('');
 }
 
 function encrypt(message, key) {
-  const msgNums = textToNumbers(message);
-  const keyNums = textToNumbers(key);
-  return numbersToText(msgNums.map((m, i) => {
-    const k = keyNums[i % keyNums.length];
-    return ((m + k - 1) % size) + 1;
-  }));
-}
-
-function decrypt(cipher, key) {
-  const cNums = textToNumbers(cipher);
+  const mNums = textToNumbers(message);
   const kNums = textToNumbers(key);
-  return numbersToText(cNums.map((c, i) => {
-    const k = kNums[i % kNums.length];
-    return ((c - k - 1 + size) % size) + 1;
-  }));
+
+  // Add corresponding numbers; repeat key if needed
+  const result = mNums.map((n, i) => n + kNums[i % kNums.length]);
+  return result;
 }
 
-// --- Vault Logic ---
-function generatePassword() {
-  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
+function decrypt(encryptedNums, key) {
+  const kNums = textToNumbers(key);
+  const result = encryptedNums.map((n, i) => n - kNums[i % kNums.length]);
+  return numbersToText(result);
+}
+
+// === Generate Random Password ===
+function generatePassword(length = 12) {
+  const charsAll = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=';
   let pass = '';
-  for (let i = 0; i < 12; i++) {
-    pass += chars.charAt(Math.floor(Math.random() * chars.length));
+  for (let i = 0; i < length; i++) {
+    pass += charsAll[Math.floor(Math.random() * charsAll.length)];
   }
   document.getElementById('password').value = pass;
 }
 
+// === Save Password ===
 function savePassword() {
-  const key = document.getElementById('key').value;
-  const account = document.getElementById('account').value.toLowerCase();
-  const password = document.getElementById('password').value.toLowerCase();
+  const account = document.getElementById('account').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const key = document.getElementById('key').value.trim();
 
-  if (!key || !account || !password) {
-    alert('Please fill in all fields!');
+  if (!account || !password || !key) {
+    alert('Please fill in all fields and enter a key.');
     return;
   }
 
   const encrypted = encrypt(password, key);
-  const vault = JSON.parse(localStorage.getItem('vault') || '{}');
-  vault[account] = encrypted;
-  localStorage.setItem('vault', JSON.stringify(vault));
+  vault.push({ account, passwordEncrypted: encrypted });
 
-  alert('✅ Password saved securely!');
+  // Clear inputs
   document.getElementById('account').value = '';
   document.getElementById('password').value = '';
+
+  loadVault();
 }
 
+// === Load Vault ===
 function loadVault() {
-  const key = document.getElementById('key').value;
   const vaultDiv = document.getElementById('vault');
+  const key = document.getElementById('key').value.trim();
   vaultDiv.innerHTML = '';
 
   if (!key) {
-    alert('Enter your key to decrypt!');
+    vaultDiv.innerHTML = '<p style="color:#777C6D;">Enter your key to view stored passwords.</p>';
     return;
   }
 
-  const vault = JSON.parse(localStorage.getItem('vault') || '{}');
-  Object.keys(vault).forEach(acc => {
-    let decrypted;
+  if (vault.length === 0) {
+    vaultDiv.innerHTML = '<p style="color:#777C6D;">Vault is empty.</p>';
+    return;
+  }
+
+  vault.forEach((entry, index) => {
+    let passwordDecrypted = '';
     try {
-      decrypted = decrypt(vault[acc], key);
-    } catch (e) {
-      decrypted = '(invalid key)';
+      passwordDecrypted = decrypt(entry.passwordEncrypted, key);
+    } catch {
+      passwordDecrypted = '*** Unable to decrypt ***';
     }
+
     const div = document.createElement('div');
-    div.className = 'vault-entry';
-    div.innerHTML = `<strong>${acc}</strong>: ${decrypted}
-      <button class="delete-btn" onclick="deleteEntry('${acc}')">Delete</button>`;
+    div.classList.add('vault-entry');
+    div.innerHTML = `
+      <strong>${entry.account}</strong>
+      <span>${passwordDecrypted}</span>
+      <button class="delete-btn" onclick="deleteVaultEntry(${index})">Delete</button>
+    `;
     vaultDiv.appendChild(div);
   });
 }
 
-function deleteEntry(account) {
-  const vault = JSON.parse(localStorage.getItem('vault') || '{}');
-  delete vault[account];
-  localStorage.setItem('vault', JSON.stringify(vault));
-  loadVault();
+// === Delete Vault Entry ===
+function deleteVaultEntry(index) {
+  if (confirm('Are you sure you want to delete this entry?')) {
+    vault.splice(index, 1);
+    loadVault();
+  }
 }
