@@ -3,8 +3,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Mono:wght@400;500&display=swap');
 
 :root {
-  --bg: #f6f7f8;
-  --panel-bg: #ffffff;
+  --bg: #777C6D;
+  --panel-bg: #777C6D;
   --panel-border: #dddddd;
   --text: #1a1a1a;
   --text-muted: #555555;
@@ -82,7 +82,7 @@ input {
   margin-top: 6px;
   border: 1px solid var(--panel-border);
   border-radius: 6px;
-  background: #ffffff;
+  background: #777C6D;
   color: var(--text);
   font-family: var(--font-mono);
   font-size: 0.9rem;
@@ -101,7 +101,7 @@ button {
   margin-top: 10px;
   border-radius: 6px;
   border: 1px solid var(--accent);
-  background: #ffffff;
+  background: #777C6D;
   color: var(--accent);
   font-weight: 600;
   cursor: pointer;
@@ -111,7 +111,7 @@ button {
 
 button:hover {
   background: var(--accent);
-  color: #ffffff;
+  color: #777C6D;
 }
 
 .generate-btn {
@@ -121,7 +121,7 @@ button:hover {
 
 .generate-btn:hover {
   background: var(--accent-alt);
-  color: #ffffff;
+  color: #777C6D;
 }
 
 .delete-btn {
@@ -136,7 +136,7 @@ button:hover {
 
 .delete-btn:hover {
   background: var(--danger);
-  color: #fff;
+  color: #777C6D;
 }
 
 /* === Dividers === */
