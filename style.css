@@ -1,23 +1,23 @@
-/* ===== Portal Game Inspired UI Theme ===== */
+/* ===== Clean Light Mode Theme ===== */
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Mono:wght@400;500&display=swap');
 
 :root {
-  --bg: #f2f2f2;            /* Light panel background */
-  --panel-bg: #ffffff;       /* White panels */
-  --panel-border: #d0d0d0;   /* Light grey borders */
-  --text: #111111;           /* Dark text */
-  --text-dim: #555555;       /* Secondary text */
-  --accent-blue: #009cff;    /* Portal blue */
-  --accent-orange: #ff6600;  /* Portal orange */
-  --success: #00cc66;
-  --danger: #ff4444;
-  --radius: 10px;
-  --transition: 0.25s ease;
-  --font-main: 'Roboto Mono', monospace;
-  --font-title: 'Orbitron', sans-serif;
+  --bg: #f6f7f8;
+  --panel-bg: #ffffff;
+  --panel-border: #dddddd;
+  --text: #1a1a1a;
+  --text-muted: #555555;
+  --accent: #0078d7;     /* calm blue accent */
+  --accent-alt: #ff7a00; /* secondary orange accent */
+  --danger: #d94c4c;
+  --radius: 8px;
+  --transition: 0.2s ease;
+  --font-main: 'Inter', sans-serif;
+  --font-mono: 'Roboto Mono', monospace;
 }
 
+/* === Base === */
 * {
   box-sizing: border-box;
 }
@@ -26,35 +26,35 @@ body {
   font-family: var(--font-main);
   background: var(--bg);
   color: var(--text);
+  margin: 0;
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
-  margin: 0;
-  padding: 50px 20px;
+}
+
+/* === Header === */
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+header img {
+  max-width: 200px;
+  height: auto;
+  margin-bottom: 10px;
+  opacity: 0.9;
 }
 
 h1 {
-  font-family: var(--font-title);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--accent-blue);
-  margin-bottom: 30px;
+  font-weight: 700;
   font-size: 1.8rem;
-  text-align: center;
-  position: relative;
+  letter-spacing: 0.5px;
+  margin: 0;
+  color: var(--accent);
 }
 
-h1::after {
-  content: '';
-  display: block;
-  height: 3px;
-  width: 80px;
-  background: linear-gradient(90deg, var(--accent-blue), var(--accent-orange));
-  margin: 8px auto 0;
-  border-radius: 2px;
-}
-
+/* === Main Container === */
 .container {
   background: var(--panel-bg);
   padding: 25px 30px;
@@ -62,73 +62,65 @@ h1::after {
   width: 100%;
   max-width: 520px;
   border: 1px solid var(--panel-border);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  animation: fadeIn 0.6s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+/* === Form Elements === */
 label {
   display: block;
   margin-top: 15px;
   font-weight: 500;
-  color: var(--text-dim);
+  color: var(--text-muted);
   text-transform: uppercase;
   font-size: 0.75rem;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
-input, textarea {
+input {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   margin-top: 6px;
   border: 1px solid var(--panel-border);
   border-radius: 6px;
-  background: #fefefe;
+  background: #ffffff;
   color: var(--text);
-  font-size: 0.95rem;
-  transition: border-color var(--transition), box-shadow var(--transition);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  transition: border-color var(--transition);
 }
 
-input:focus, textarea:focus {
+input:focus {
   outline: none;
-  border-color: var(--accent-blue);
-  box-shadow: 0 0 6px var(--accent-blue);
+  border-color: var(--accent);
 }
 
+/* === Buttons === */
 button {
   width: 100%;
-  padding: 12px;
+  padding: 10px 0;
   margin-top: 10px;
-  border: 2px solid var(--accent-blue);
   border-radius: 6px;
-  font-size: 0.95rem;
+  border: 1px solid var(--accent);
+  background: #ffffff;
+  color: var(--accent);
   font-weight: 600;
-  background: transparent;
-  color: var(--accent-blue);
-  text-transform: uppercase;
   cursor: pointer;
-  letter-spacing: 1px;
-  transition: background var(--transition), color var(--transition), transform 0.15s ease;
-  font-family: var(--font-title);
+  text-transform: uppercase;
+  transition: background var(--transition), color var(--transition);
 }
 
 button:hover {
-  background: var(--accent-blue);
+  background: var(--accent);
   color: #ffffff;
-  transform: translateY(-1px);
 }
 
 .generate-btn {
-  border-color: var(--accent-orange);
-  color: var(--accent-orange);
+  border-color: var(--accent-alt);
+  color: var(--accent-alt);
 }
 
 .generate-btn:hover {
-  background: var(--accent-orange);
+  background: var(--accent-alt);
   color: #ffffff;
 }
 
@@ -139,71 +131,64 @@ button:hover {
   font-size: 0.8rem;
   padding: 6px 12px;
   width: auto;
+  margin-left: 10px;
 }
 
 .delete-btn:hover {
   background: var(--danger);
-  color: #ffffff;
+  color: #fff;
 }
 
+/* === Dividers === */
 .divider {
   margin: 25px 0;
   border: none;
   height: 1px;
-  background: linear-gradient(90deg, var(--accent-blue), transparent);
+  background: #e4e4e4;
 }
 
+/* === Vault Entries === */
 .vault-entry {
-  background: #f8f8f8;
-  padding: 12px 15px;
+  background: #fdfdfd;
+  padding: 10px 15px;
   border-radius: 6px;
   margin-top: 10px;
-  border: 1px solid #d0d0d0;
+  border: 1px solid #e1e1e1;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: background var(--transition), transform 0.2s ease;
-}
-
-.vault-entry:hover {
-  background: #f0f0f0;
-  transform: translateY(-1px);
 }
 
 .vault-entry strong {
-  color: var(--accent-blue);
-  font-family: var(--font-title);
-  letter-spacing: 1px;
+  color: var(--accent);
 }
 
 .vault-entry span {
   flex-grow: 1;
   margin-left: 10px;
-  color: var(--text);
+  font-family: var(--font-mono);
   word-break: break-all;
 }
 
-button:active {
-  transform: translateY(0);
+/* === Footer === */
+footer {
+  text-align: center;
+  margin-top: 40px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
 }
 
-button:hover, input:focus {
-  box-shadow: 0 0 6px var(--accent-blue);
-}
-
-::selection {
-  background: var(--accent-blue);
-  color: #ffffff;
-}
-
-/* Scrollbar for light theme */
+/* === Scrollbar === */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--accent-blue);
+  background: #cccccc;
   border-radius: 10px;
 }
+::-webkit-scrollbar-thumb:hover {
+  background: #aaaaaa;
+}
 ::-webkit-scrollbar-track {
-  background: #e5e5e5;
+  background: #f0f0f0;
 }
