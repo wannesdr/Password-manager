@@ -11,7 +11,7 @@ const chars = [
 function textToNumbers(text) {
   return text.split('').map(c => {
     const idx = chars.indexOf(c);
-    return idx >= 0 ? idx + 1 : c.charCodeAt(0); // fallback: char code
+    return idx >= 0 ? idx + 1 : c.charCodeAt(0);
   });
 }
 
@@ -42,14 +42,28 @@ function getVaultCookie() {
     ?.split('=')[1];
   if (!cookie) return [];
   try {
-    return JSON.parse(decodeURIComponent(cookie));
+    const vault = JSON.parse(decodeURIComponent(cookie));
+    // Convert passwordEncrypted strings back to arrays of numbers
+    return vault.map(entry => ({
+      account: entry.account,
+      passwordEncrypted: entry.passwordEncrypted
+    }));
   } catch {
     return [];
   }
 }
 
 function saveVaultCookie(vault) {
-  document.cookie = `vaultData=${encodeURIComponent(JSON.stringify(vault))}; path=/; max-age=${60 * 60 * 24 * 365}`;
+  if (!vault || vault.length === 0) {
+    document.cookie = "vaultData=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  } else {
+    // Convert numbers arrays to JSON-serializable format
+    const vaultSerializable = vault.map(entry => ({
+      account: entry.account,
+      passwordEncrypted: entry.passwordEncrypted
+    }));
+    document.cookie = `vaultData=${encodeURIComponent(JSON.stringify(vaultSerializable))}; path=/; max-age=${60 * 60 * 24 * 365}`;
+  }
 }
 
 // === Generate Random Password ===
@@ -67,18 +81,17 @@ function savePassword() {
   const account = document.getElementById('account').value.trim();
   const password = document.getElementById('password').value.trim();
   const key = document.getElementById('key').value.trim();
-  
+
   if (!account || !password || !key) {
     alert('Please fill in all fields and enter a key.');
     return;
   }
 
-  const encrypted = encrypt(password, key);
+  const encrypted = encrypt(password, key); // array of numbers
   const vault = getVaultCookie();
   vault.push({ account, passwordEncrypted: encrypted });
   saveVaultCookie(vault);
 
-  // Clear inputs
   document.getElementById('account').value = '';
   document.getElementById('password').value = '';
 
@@ -131,5 +144,4 @@ function deleteVaultEntry(index) {
   }
 }
 
-// === Initialize on page load ===
 window.addEventListener('load', loadVault);
