@@ -1,8 +1,4 @@
-// === Vault Storage ===
-let vault = []; // array of { account, passwordEncrypted }
-
 // === Custom Encryption Mapping ===
-// Lowercase a-z, Uppercase A-Z, numbers 0-9, plus Unicode character \u3164
 const chars = [
   'a','b','c','d','e','f','g','h','i','j','k','l','m',
   'n','o','p','q','r','s','t','u','v','w','x','y','z',
@@ -29,16 +25,31 @@ function numbersToText(nums) {
 function encrypt(message, key) {
   const mNums = textToNumbers(message);
   const kNums = textToNumbers(key);
-
-  // Add corresponding numbers; repeat key if needed
-  const result = mNums.map((n, i) => n + kNums[i % kNums.length]);
-  return result;
+  return mNums.map((n, i) => n + kNums[i % kNums.length]);
 }
 
 function decrypt(encryptedNums, key) {
   const kNums = textToNumbers(key);
   const result = encryptedNums.map((n, i) => n - kNums[i % kNums.length]);
   return numbersToText(result);
+}
+
+// === Cookie Helpers ===
+function getVaultCookie() {
+  const cookie = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('vaultData='))
+    ?.split('=')[1];
+  if (!cookie) return [];
+  try {
+    return JSON.parse(decodeURIComponent(cookie));
+  } catch {
+    return [];
+  }
+}
+
+function saveVaultCookie(vault) {
+  document.cookie = `vaultData=${encodeURIComponent(JSON.stringify(vault))}; path=/; max-age=${60 * 60 * 24 * 365}`;
 }
 
 // === Generate Random Password ===
@@ -56,14 +67,16 @@ function savePassword() {
   const account = document.getElementById('account').value.trim();
   const password = document.getElementById('password').value.trim();
   const key = document.getElementById('key').value.trim();
-
+  
   if (!account || !password || !key) {
     alert('Please fill in all fields and enter a key.');
     return;
   }
 
   const encrypted = encrypt(password, key);
+  const vault = getVaultCookie();
   vault.push({ account, passwordEncrypted: encrypted });
+  saveVaultCookie(vault);
 
   // Clear inputs
   document.getElementById('account').value = '';
@@ -76,6 +89,7 @@ function savePassword() {
 function loadVault() {
   const vaultDiv = document.getElementById('vault');
   const key = document.getElementById('key').value.trim();
+  const vault = getVaultCookie();
   vaultDiv.innerHTML = '';
 
   if (!key) {
@@ -110,7 +124,12 @@ function loadVault() {
 // === Delete Vault Entry ===
 function deleteVaultEntry(index) {
   if (confirm('Are you sure you want to delete this entry?')) {
+    const vault = getVaultCookie();
     vault.splice(index, 1);
+    saveVaultCookie(vault);
     loadVault();
   }
 }
+
+// === Initialize on page load ===
+window.addEventListener('load', loadVault);
