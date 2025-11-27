@@ -34,7 +34,7 @@ function decrypt(encryptedNums, key) {
   return numbersToText(result);
 }
 
-// === Cookie Helpers ===
+
 function getVaultCookie() {
   const cookie = document.cookie
     .split('; ')
@@ -66,7 +66,7 @@ function saveVaultCookie(vault) {
   }
 }
 
-// === Generate Random Password ===
+
 function generatePassword(length = 12) {
   const charsAll = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=';
   let pass = '';
@@ -76,7 +76,7 @@ function generatePassword(length = 12) {
   document.getElementById('password').value = pass;
 }
 
-// === Save Password ===
+
 function savePassword() {
   const account = document.getElementById('account').value.trim();
   const password = document.getElementById('password').value.trim();
